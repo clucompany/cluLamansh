@@ -7,7 +7,7 @@ license = "Apache-2.0"
 readme = "README.md"
 
 description = "A binary record of the values stored in the array using the Lamansh protocol."
-keywords = ["cluLamansh", "array_bin", "lamansh", "lamash-protocol", "protocol", "clucompany"]
+keywords = ["cluLamansh", "lamansh", "lamash-protocol", "protocol", "clucompany"]
 categories = ["development-tools"]
 
 [lib]
