@@ -1,5 +1,5 @@
 
-/*! Data types for a name or value */
+/*! Data types for a name or value lamansh. */
 
 extern crate byteorder;
 use self::byteorder::BigEndian;

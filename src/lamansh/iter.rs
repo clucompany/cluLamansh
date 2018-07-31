@@ -65,7 +65,7 @@ impl<'a: 'b, 'b, NC: LamanshSized + 'static, N: LamanshSized + 'static> Iterator
 				
 				Some( Ok( a ) )
 			},
-			_ => Some( Err( cluLamanshErr::ErrNextSliceValue ) )
+			_ => Some( Err( cluLamanshErr::ErrGetNextValue ) )
 		}
 		
 		
@@ -75,7 +75,6 @@ impl<'a: 'b, 'b, NC: LamanshSized + 'static, N: LamanshSized + 'static> Iterator
 
 
 #[derive(Debug, Clone)]
-#[allow(non_camel_case_types)]
 pub struct cluLamanshIntoIter<'a, NC: LamanshSized + 'static, N: LamanshSized + 'static> {
 	lamansh: cluLamansh<'a, NC, N>,
 	
@@ -133,7 +132,7 @@ impl<'a, NC: LamanshSized + 'static, N: LamanshSized + 'static> Iterator for clu
 				
 				Some( Ok( a ) )
 			},
-			_ => Some( Err( cluLamanshErr::ErrNextSliceValue ) )
+			_ => Some( Err( cluLamanshErr::ErrGetNextValue ) )
 		}
 		
 		

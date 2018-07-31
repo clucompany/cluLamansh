@@ -1,10 +1,12 @@
 
-/*!Methods of recording and reading the protocol */
+/*! Methods of recording and reading the protocol */
 
 
 pub mod iter;
 pub mod build;
 pub mod sized;
+pub mod array;
+pub mod buffer;
 
 use lamansh::iter::cluLamanshIntoIter;
 use std::convert::TryFrom;
@@ -39,7 +41,7 @@ impl<'a, NC: LamanshSized + 'static, N: LamanshSized + 'static> cluLamansh<'a, N
 			let count_header = {
 				match array.get( .. byted_count) {
 					Some(a) => NC::read_usize(a)+1,
-					_ => return Err( cluLamanshErr::ErrGetSliceSizeHeadArray ),
+					_ => return Err( cluLamanshErr::ErrGetSizeArray ),
 				}
 			};
 			
@@ -49,12 +51,12 @@ impl<'a, NC: LamanshSized + 'static, N: LamanshSized + 'static> cluLamansh<'a, N
 
 			let header_array = match array.get(byted_count .. n) {
 				Some(a) => a,
-				_ => return Err( cluLamanshErr::ErrGetSliceValueHeadArray ),
+				_ => return Err( cluLamanshErr::ErrGetValueHead ),
 			};
 
 			let value_array = match array.get(n .. ) {
 				Some(a) => a,
-				_ => return Err( cluLamanshErr::ErrGetSliceValueArray ),
+				_ => return Err( cluLamanshErr::ErrGetValue ),
 			};
 			
 			( header_array, value_array )
@@ -87,15 +89,21 @@ impl<'a, NC: LamanshSized + 'static, N: LamanshSized + 'static> cluLamansh<'a, N
 
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
-#[allow(non_camel_case_types)]
 pub enum cluLamanshErr {
+	///Empty data is not possible to convert
 	ErrEmptyLamansh,
 	
-	ErrGetSliceSizeHeadArray,
-	ErrGetSliceValueHeadArray,
-	ErrGetSliceValueArray,
-	
-	ErrNextSliceValue,
+	///It is not possible to get the number of elements
+	ErrGetSizeArray,
+
+	///Going beyond the header
+	ErrGetValueHead,
+
+	///Going beyond the value
+	ErrGetValue,
+
+	///Going beyond the value
+	ErrGetNextValue,
 }
 
 
